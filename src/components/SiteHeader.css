@@ -1,0 +1,195 @@
+/* Figma: "Rivan logo" (6:29), "Menu item" (1:2),
+   "Primary navigation" (6:30), "Category menu" (6:37) */
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 14px 0;
+}
+
+.site-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.site-header__logo {
+  width: 80px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.site-header__wordmark {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-tab {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: var(--r-sm);
+  background: var(--tab-idle);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  transition: background 160ms ease;
+}
+
+.nav-tab:hover {
+  background: var(--tab-active);
+}
+
+.nav-tab.is-active {
+  background: var(--tab-active);
+  font-weight: 400;
+}
+
+.site-header__category {
+  position: relative;
+}
+
+.category-menu {
+  position: absolute;
+  top: calc(100% + 9px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 190px;
+  padding: 6px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--r-md);
+  background: var(--panel);
+  box-shadow: var(--shadow-panel);
+  animation: category-menu-in 140ms ease-out both;
+}
+
+.category-menu__item {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--r-sm);
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  transition: background 140ms ease;
+}
+
+.category-menu__item:hover {
+  background: var(--tab-active);
+}
+
+@keyframes category-menu-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -6px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (max-width: 640px) {
+  .site-header {
+    justify-content: center;
+  }
+
+  .site-header__brand {
+    gap: 12px;
+  }
+
+  .nav-tab {
+    padding: 9px 13px;
+    font-size: 14px;
+  }
+
+  .category-menu {
+    width: min(190px, 70vw);
+  }
+}
+
+/* --- Category menu: second level under Prompt Hacking --- */
+
+/* Menu rows became links when the categories got real pages. */
+.category-menu__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.category-menu__group {
+  position: relative;
+}
+
+.category-menu__chevron {
+  font-size: 17px;
+  line-height: 1;
+  color: var(--text-muted);
+}
+
+.category-menu__item--parent[aria-expanded="true"] {
+  background: var(--tab-active);
+}
+
+.category-submenu {
+  position: absolute;
+  top: -6px;
+  left: 100%;
+  z-index: 21;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 220px;
+  margin-left: 6px;
+  padding: 6px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--r-md);
+  background: var(--panel);
+  box-shadow: var(--shadow-panel);
+  animation: category-submenu-in 140ms ease-out both;
+}
+
+@keyframes category-submenu-in {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* No room to fly out on a phone — stack the second level inline instead. */
+@media (max-width: 640px) {
+  .category-submenu {
+    position: static;
+    width: auto;
+    margin: 2px 0 2px 12px;
+    padding: 4px;
+    border-left: 2px solid var(--cyan);
+    border-radius: var(--r-sm);
+    animation: none;
+  }
+
+  .category-submenu .category-menu__item {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}

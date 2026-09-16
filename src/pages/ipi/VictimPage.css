@@ -1,0 +1,13 @@
+/* The simulation runs edge to edge directly under the site header, matching
+   assets/reference/header-whitebase.jpg. There is no briefing or debrief on the
+   page — see instruction.md for how the session is meant to run. */
+
+.ipi-page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.ipi-page .mcdo-sim {
+  flex: 1;
+}

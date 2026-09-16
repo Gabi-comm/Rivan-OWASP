@@ -1,0 +1,377 @@
+/* Popup support bot for the Indirect Prompt Injection lab.
+
+   The chat itself is styled as part of the simulated brand (red/yellow); the
+   "Lab controls" block at the bottom deliberately switches to the Rivan navy
+   palette, so it reads as instrumentation sitting on top of the sim rather
+   than as part of the fake site. */
+
+.chat-launcher {
+  position: fixed;
+  right: clamp(16px, 3vw, 32px);
+  bottom: clamp(16px, 3vw, 32px);
+  z-index: 60;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #da291c;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.32);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.chat-launcher:hover {
+  background: #b81f14;
+  transform: translateY(-2px);
+}
+
+.chat-panel {
+  position: fixed;
+  right: clamp(12px, 3vw, 32px);
+  bottom: clamp(12px, 3vw, 32px);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  width: min(390px, calc(100vw - 24px));
+  max-height: min(660px, calc(100dvh - 24px));
+  border-radius: 16px;
+  overflow: hidden;
+  background: #ffffff;
+  color: #1c1c1c;
+  color-scheme: light;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.42);
+  animation: chat-panel-in 160ms ease-out both;
+}
+
+@keyframes chat-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chat-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #da291c;
+  color: #ffffff;
+}
+
+.chat-panel__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.chat-panel__subtitle {
+  margin: 2px 0 0;
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.82;
+}
+
+.chat-panel__close {
+  background: none;
+  color: #ffffff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.chat-panel__log {
+  flex: 1;
+  min-height: 160px;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #f6f6f6;
+}
+
+.chat-msg {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 88%;
+}
+
+.chat-msg--user {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.chat-msg__bubble {
+  padding: 10px 13px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.chat-msg--assistant .chat-msg__bubble {
+  background: #ffffff;
+  border: 1px solid #e3e3e3;
+  border-bottom-left-radius: 4px;
+}
+
+.chat-msg--user .chat-msg__bubble {
+  background: #ffc72c;
+  color: #292929;
+  font-weight: 500;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-msg__bubble--typing {
+  display: flex;
+  gap: 5px;
+  padding: 14px 13px;
+}
+
+.chat-msg__bubble--typing span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #b9b9b9;
+  animation: chat-typing 1.1s ease-in-out infinite;
+}
+
+.chat-msg__bubble--typing span:nth-child(2) {
+  animation-delay: 0.16s;
+}
+
+.chat-msg__bubble--typing span:nth-child(3) {
+  animation-delay: 0.32s;
+}
+
+@keyframes chat-typing {
+  0%, 60%, 100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+/* The point of the whole exercise. */
+.chat-leak {
+  margin: 0;
+  padding: 10px 12px;
+  border: 2px solid #c81d0f;
+  border-left-width: 5px;
+  border-radius: 10px;
+  background: #fff1ef;
+  color: #8f1a12;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.chat-error {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 11px 13px;
+  border-radius: 10px;
+  background: #fdecea;
+  border: 1px solid #f0b4ad;
+  color: #8f1a12;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.chat-error__hint {
+  font-weight: 400;
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.chat-panel__suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 12px 16px 0;
+}
+
+.chat-chip {
+  padding: 7px 11px;
+  border: 1px solid #e0e0e0;
+  border-radius: 999px;
+  background: #ffffff;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  color: #444444;
+  cursor: pointer;
+  transition: border-color 140ms ease, color 140ms ease;
+}
+
+.chat-chip:hover {
+  border-color: #da291c;
+  color: #da291c;
+}
+
+.chat-panel__form {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid #ececec;
+}
+
+.chat-panel__input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #1c1c1c;
+  background: #ffffff;
+}
+
+.chat-panel__input:focus-visible {
+  outline: 2px solid #da291c;
+  outline-offset: 1px;
+}
+
+.chat-panel__send {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: #da291c;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.chat-panel__send:disabled {
+  background: #d9b3af;
+  cursor: not-allowed;
+}
+
+/* --- Lab controls -----------------------------------------------------------
+   The presenter's panel, not part of the simulated brand. Collapsed by default:
+   during a demo the class is looking at this chat panel too, and "Reveal hidden
+   payload" gives the game away before the reveal is earned. */
+
+.chat-lab {
+  background: var(--navy-800);
+  color: var(--text);
+  color-scheme: dark;
+}
+
+.chat-lab__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 16px;
+  background: none;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  cursor: pointer;
+  transition: background 140ms ease;
+}
+
+.chat-lab__summary:hover {
+  background: var(--navy-700);
+}
+
+.chat-lab__caret {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.chat-lab__body {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 2px 16px 14px;
+}
+
+.chat-lab__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0;
+  font-size: 12px;
+}
+
+.chat-lab__row--static {
+  color: var(--text-muted);
+}
+
+.chat-lab__row select {
+  flex: 1;
+  min-width: 0;
+  max-width: 62%;
+  padding: 5px 7px;
+  border: 1px solid var(--panel-border);
+  border-radius: 6px;
+  background: var(--navy-900);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.chat-lab__row--check {
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.chat-lab__row--check input {
+  accent-color: var(--cyan-bright);
+}
+
+.chat-lab__toggle {
+  padding: 7px 10px;
+  border: 1px solid var(--panel-border);
+  border-radius: 6px;
+  background: var(--navy-900);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.chat-lab__toggle:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.chat-lab__prompt {
+  max-height: 210px;
+  margin: 0;
+  padding: 10px;
+  overflow: auto;
+  border-radius: 8px;
+  background: var(--navy-1000);
+  color: #cfe8f5;
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

@@ -1,0 +1,137 @@
+/* Promo slideshow — replaces the single "Promo image" (Figma 9:4).
+   All four cards are square artwork, so the frame is 1:1 rather than the
+   original 280 x 320, which cropped the card's own top and bottom bands. */
+
+.promo-slideshow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.promo-slideshow:focus {
+  outline: none;
+}
+
+.promo-slideshow:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 6px;
+  border-radius: var(--r-lg);
+}
+
+.promo-slideshow__frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--navy-900);
+  box-shadow: var(--shadow-promo);
+}
+
+.promo-slide {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  transform: scale(1.015);
+  transition: opacity 650ms ease, transform 650ms ease;
+  pointer-events: none;
+}
+
+.promo-slide.is-active {
+  opacity: 1;
+  transform: none;
+}
+
+.promo-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+}
+
+/* --- Arrows --- */
+
+.promo-slideshow__arrow {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--panel-border);
+  background: rgba(8, 26, 49, 0.72);
+  backdrop-filter: blur(6px);
+  color: var(--text);
+  opacity: 0;
+  transition: opacity 200ms ease, background 160ms ease;
+}
+
+.promo-slideshow__arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+.promo-slideshow__arrow--prev {
+  left: 12px;
+}
+
+.promo-slideshow__arrow--next {
+  right: 12px;
+}
+
+.promo-slideshow:hover .promo-slideshow__arrow,
+.promo-slideshow:focus-within .promo-slideshow__arrow {
+  opacity: 1;
+}
+
+.promo-slideshow__arrow:hover {
+  background: var(--tab-active);
+}
+
+/* Arrows stay visible where there is no hover to reveal them. */
+@media (hover: none) {
+  .promo-slideshow__arrow {
+    opacity: 1;
+  }
+}
+
+/* --- Dots --- */
+
+.promo-slideshow__dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.promo-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border-radius: 50%;
+  background: var(--panel-border);
+  transition: background 200ms ease, width 200ms ease;
+}
+
+.promo-dot:hover {
+  background: var(--text-muted);
+}
+
+.promo-dot.is-active {
+  width: 24px;
+  border-radius: 4px;
+  background: var(--cyan);
+}
+
+.promo-slideshow__status {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  opacity: 0.8;
+  text-align: center;
+}

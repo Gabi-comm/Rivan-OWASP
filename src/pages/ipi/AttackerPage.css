@@ -1,0 +1,12 @@
+/* The attacker's view is the replica itself - the only addition is the
+   write-a-review form, which lives in the reviews section (see mcdo.css). */
+
+.attacker-page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.attacker-page .mcdo-sim {
+  flex: 1;
+}

@@ -1,0 +1,98 @@
+/* ---------------------------------------------------------------
+   Design tokens — values lifted from the Figma file
+   "Rivan Simulation" (YPJDpQWgSMrkBnGtS1lH2g)
+   --------------------------------------------------------------- */
+:root {
+  /* Backdrop ramp (radial gradient stops on both frames) */
+  --navy-1000: #040c1e; /* transition page, outer stop */
+  --navy-900: #0b142b; /* home page, outer stop */
+  --navy-800: #071e37; /* transition page, mid stop */
+  --navy-700: #09213c; /* home page, mid stop */
+  --navy-600: #0b2f51; /* both pages, core stop */
+
+  /* Surfaces */
+  --panel: #0d2744; /* category dropdown */
+  --panel-border: #1b4667;
+  --tab-idle: #081a31;
+  --tab-active: #123858;
+
+  /* Accents */
+  --cyan: #39c7f2; /* eyebrow + accent line */
+  --cyan-bright: #00c8ff; /* divider core */
+  --cyan-glow: rgba(46, 191, 255, 0.45); /* heading text-shadow */
+
+  /* Text */
+  --text: #ffffff;
+  --text-muted: #7ec8e3;
+
+  /* Elevation */
+  --shadow-panel: 0 10px 24px rgba(0, 0, 0, 0.33);
+  --shadow-promo: 0 8px 24px rgba(0, 0, 0, 0.47);
+
+  /* Radii */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 12px;
+
+  /* Shell */
+  --shell-max: 1120px;
+  --shell-gutter: clamp(20px, 5vw, 64px);
+
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background: var(--navy-900);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

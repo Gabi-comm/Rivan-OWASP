@@ -1,0 +1,622 @@
+/* Simulated McDelivery PH site.
+   Reference: assets/reference/page-1.jpg, page-2.jpg, mcdo-footer.jpg
+
+   Everything is scoped under .mcdo-sim. The surrounding app is a dark navy
+   theme with `color-scheme: dark` on :root, so this subtree has to re-declare
+   its own light context rather than inherit. */
+
+.mcdo-sim {
+  --mcdo-red: #da291c;
+  --mcdo-yellow: #ffc72c;
+  --mcdo-ink: #292929;
+  --mcdo-max: 1200px;
+
+  color-scheme: light;
+  background: #ffffff;
+  color: var(--mcdo-ink);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overflow: hidden; /* contains the card grid's rounded corners on mobile */
+}
+
+/* --- Nav (page-1.jpg) --- */
+
+.mcdo-nav {
+  background: #ffffff;
+  padding: 14px var(--shell-gutter);
+}
+
+.mcdo-nav__inner {
+  max-width: var(--mcdo-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 2.2vw, 34px);
+  flex-wrap: wrap;
+}
+
+.mcdo-nav__logo {
+  width: 58px;
+  height: 46px;
+  object-fit: contain;
+}
+
+.mcdo-nav__links {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2.2vw, 34px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.mcdo-nav__link {
+  background: none;
+  font-family: inherit;
+  font-size: clamp(14px, 1.2vw, 18px);
+  font-weight: 800;
+  color: var(--mcdo-red);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: opacity 140ms ease;
+}
+
+.mcdo-nav__link:hover {
+  opacity: 0.66;
+}
+
+.mcdo-nav__burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 34px;
+  height: 22px;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.mcdo-nav__burger span {
+  display: block;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--mcdo-red);
+}
+
+/* --- Hero (page-1.jpg) --- */
+
+.mcdo-hero {
+  position: relative;
+  line-height: 0;
+}
+
+.mcdo-hero__image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.mcdo-hero__pager {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(10px, 2.4vw, 26px);
+  transform: translateX(-50%);
+  display: flex;
+  gap: clamp(10px, 1.4vw, 18px);
+}
+
+.mcdo-hero__dot {
+  width: clamp(8px, 0.8vw, 12px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #d9d9d9;
+}
+
+.mcdo-hero__dot.is-active {
+  background: var(--mcdo-red);
+}
+
+/* --- Feature cards (page-2.jpg) --- */
+
+.mcdo-cards {
+  padding: clamp(36px, 6vw, 72px) var(--shell-gutter);
+}
+
+.mcdo-cards__grid {
+  max-width: var(--mcdo-max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 3.4vw, 48px);
+}
+
+.mcdo-card {
+  position: relative;
+  margin: 0;
+  border-radius: 24px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.mcdo-card__image {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+
+.mcdo-card__label {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: clamp(12px, 1.6vw, 22px);
+  text-align: center;
+  font-size: clamp(16px, 1.5vw, 22px);
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.42);
+}
+
+/* --- Footer (mcdo-footer.jpg) --- */
+
+.mcdo-footer {
+  position: relative;
+  background: var(--mcdo-yellow);
+  padding: clamp(28px, 4vw, 48px) var(--shell-gutter);
+}
+
+.mcdo-footer__inner {
+  max-width: var(--mcdo-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(20px, 3.6vw, 56px);
+  flex-wrap: wrap;
+}
+
+.mcdo-footer__logo {
+  width: 99px;
+  height: 104px;
+  object-fit: contain;
+}
+
+.mcdo-footer__badges {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.mcdo-footer__badges img {
+  width: 150px;
+  height: 45px;
+  object-fit: contain;
+}
+
+.mcdo-footer__links {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin: 0;
+  padding-top: 8px;
+  list-style: none;
+}
+
+.mcdo-footer__link {
+  background: none;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--mcdo-ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.mcdo-footer__link:hover {
+  text-decoration: underline;
+}
+
+.mcdo-footer__social {
+  padding-top: 8px;
+}
+
+.mcdo-footer__social-title {
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.mcdo-footer__social-icons {
+  display: flex;
+  gap: 16px;
+}
+
+.mcdo-footer__social-button {
+  background: none;
+  cursor: pointer;
+  line-height: 0;
+}
+
+/* The source icons are red artwork on an opaque white background. Multiplying
+   against the yellow footer drops the white out without touching the files. */
+.mcdo-footer__social-button img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.mcdo-footer__top {
+  position: absolute;
+  right: 0;
+  bottom: clamp(18px, 3vw, 40px);
+  width: 46px;
+  height: 46px;
+  background: #e8890c;
+  color: #1a1a1a;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.mcdo-footer__top:hover {
+  background: #f2a02a;
+}
+
+/* --- Planted payloads ---
+   Hidden the way real injected content hides: still in the DOM, still in
+   textContent, invisible on screen. The reveal styles below are what the lab's
+   "Reveal hidden payload" toggle switches on. */
+
+.mcdo-seed {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.mcdo-sim--reveal .mcdo-seed {
+  position: relative;
+  display: block;
+  width: auto;
+  height: auto;
+  margin: 14px auto 0;
+  max-width: var(--mcdo-max);
+  padding: 12px 14px;
+  overflow: visible;
+  clip-path: none;
+  white-space: normal;
+  border: 2px dashed var(--mcdo-red);
+  border-radius: 10px;
+  background: #fff3f2;
+  color: #8f1a12;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* Reveal labels are CSS generated content on purpose: it is not part of
+   textContent, so toggling reveal never changes what the scraper harvests. */
+.mcdo-sim--reveal [data-reveal-note]::after {
+  content: attr(data-reveal-note);
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  z-index: 2;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--mcdo-red);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.mcdo-sim--reveal .mcdo-card[data-reveal-note] {
+  outline: 3px solid var(--mcdo-red);
+  outline-offset: -3px;
+}
+
+.mcdo-sim--reveal .mcdo-seed[data-reveal-note]::after {
+  position: static;
+  display: block;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 900px) {
+  .mcdo-cards__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mcdo-footer__top {
+    bottom: auto;
+    top: 12px;
+  }
+}
+
+@media (max-width: 560px) {
+  .mcdo-cards__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mcdo-nav__links {
+    gap: 12px;
+  }
+}
+
+/* --- Customer reviews ---
+   The attack surface. Anyone can post here, the site renders it faithfully,
+   and the support bot scrapes it along with everything else. */
+
+.mcdo-reviews {
+  padding: 0 var(--shell-gutter) clamp(36px, 6vw, 72px);
+  background: #f7f7f7;
+  padding-top: clamp(36px, 6vw, 64px);
+}
+
+.mcdo-reviews__inner {
+  max-width: var(--mcdo-max);
+  margin: 0 auto;
+}
+
+.mcdo-reviews__title {
+  margin: 0 0 clamp(18px, 2.6vw, 30px);
+  font-size: clamp(22px, 2.6vw, 32px);
+  font-weight: 800;
+  color: var(--mcdo-ink);
+}
+
+.mcdo-reviews__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 22px);
+  align-items: start;
+}
+
+.mcdo-review {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 18px;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+}
+
+.mcdo-review__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mcdo-review__name {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--mcdo-ink);
+}
+
+.mcdo-review__stars {
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: #f5b301;
+  white-space: nowrap;
+}
+
+.mcdo-review__stars-dim {
+  color: #dcdcdc;
+}
+
+.mcdo-review__body {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #4a4a4a;
+}
+
+@media (max-width: 900px) {
+  .mcdo-reviews__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .mcdo-reviews__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* --- Write-a-review form ---
+   The top half is the site's own form, in the site's own styling. The block
+   below the divider is the attacker's addition and is marked as such - it is
+   the only thing on this page that is not part of the replica. */
+
+.mcdo-composer {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: clamp(18px, 2.6vw, 28px);
+  padding: clamp(18px, 2.4vw, 26px);
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+}
+
+.mcdo-composer__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--mcdo-ink);
+}
+
+.mcdo-composer__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: end;
+}
+
+.mcdo-composer__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.mcdo-composer__field > span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #8a8a8a;
+}
+
+.mcdo-composer__field input,
+.mcdo-composer__field textarea {
+  padding: 9px 11px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--mcdo-ink);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.mcdo-composer__field input:focus-visible,
+.mcdo-composer__field textarea:focus-visible {
+  outline: 2px solid var(--mcdo-red);
+  outline-offset: 1px;
+}
+
+.mcdo-composer__stars {
+  display: flex;
+  gap: 2px;
+}
+
+.mcdo-composer__star {
+  padding: 2px;
+  background: none;
+  font-size: 22px;
+  line-height: 1;
+  color: #dcdcdc;
+  cursor: pointer;
+  transition: color 120ms ease;
+}
+
+.mcdo-composer__star.is-on {
+  color: #f5b301;
+}
+
+.mcdo-composer__actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.mcdo-composer__submit {
+  padding: 11px 22px;
+  border-radius: 999px;
+  background: var(--mcdo-red);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.mcdo-composer__submit:hover {
+  background: #b81f14;
+}
+
+.mcdo-composer__posted {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2f7d4f;
+}
+
+@media (max-width: 560px) {
+  .mcdo-composer__row {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+  }
+}
+
+.mcdo-composer__hint {
+  margin: -6px 0 0;
+  font-size: 12px;
+  color: #9a9a9a;
+}
+
+/* --- Reveal ---
+   Concealment now lives in inline styles the reviewer supplied, so the reveal
+   toggle has to out-rank them. Anything nested inside a review body is forced
+   back into view and flagged; a review with no markup has no descendants, so
+   nothing happens to it. */
+
+.mcdo-sim--reveal .mcdo-review__body :is(span, div, p, b, i, em, strong, small, u) {
+  display: inline !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  clip-path: none !important;
+  text-indent: 0 !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  color: #8f1a12 !important;
+  background: #fff3f2 !important;
+  box-shadow: 0 0 0 2px #e0533f;
+  border-radius: 4px;
+  padding: 1px 4px;
+  white-space: normal !important;
+}
+
+.mcdo-sim--reveal .mcdo-review__body:has(:is(span, div, p, b, i, em, strong, small, u))::before {
+  content: "Concealed text found in this review";
+  display: block;
+  margin-bottom: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #b8362a;
+}
+
+.mcdo-composer__reveal {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 2px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+  font-size: 13px;
+  color: #6b6b6b;
+  cursor: pointer;
+}
+
+.mcdo-composer__reveal input {
+  margin-top: 2px;
+  accent-color: var(--mcdo-red);
+}
+
+.mcdo-composer__reveal em {
+  font-style: normal;
+  color: #9a9a9a;
+}

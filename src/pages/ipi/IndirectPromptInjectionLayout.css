@@ -1,0 +1,148 @@
+.ipi-shell {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* --- Role switcher: floats at the left edge, out of the replica's way --- */
+
+.role-switch {
+  position: fixed;
+  left: 0;
+  top: 40%;
+  z-index: 55;
+  display: flex;
+  align-items: flex-start;
+}
+
+.role-switch__trigger {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  padding: 10px 13px 10px 11px;
+  border: 1px solid var(--panel-border);
+  border-left: none;
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  background: var(--panel);
+  box-shadow: var(--shadow-panel);
+  cursor: pointer;
+  transition: background 150ms ease, padding 150ms ease;
+}
+
+.role-switch__trigger:hover,
+.role-switch__trigger.is-open {
+  background: var(--tab-active);
+  padding-right: 16px;
+}
+
+.role-switch__eyebrow {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+.role-switch__current {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.role-switch__caret {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.role-switch__menu {
+  margin-left: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 210px;
+  padding: 7px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--r-md);
+  background: var(--panel);
+  box-shadow: var(--shadow-panel);
+  animation: role-switch-in 140ms ease-out both;
+}
+
+@keyframes role-switch-in {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.role-switch__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 9px 11px;
+  border-radius: var(--r-sm);
+  transition: background 140ms ease;
+}
+
+.role-switch__item:hover {
+  background: var(--tab-active);
+}
+
+.role-switch__item.is-active {
+  background: var(--tab-active);
+  box-shadow: inset 2px 0 0 var(--cyan);
+}
+
+.role-switch__item-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.role-switch__item-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.role-switch__reset {
+  margin-top: 4px;
+  padding: 8px 11px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--r-sm);
+  background: var(--navy-900);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 11.5px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.role-switch__reset:hover:not(:disabled) {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+
+.role-switch__reset:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+@media (max-width: 560px) {
+  .role-switch {
+    top: auto;
+    bottom: 96px;
+  }
+
+  .role-switch__menu {
+    width: 180px;
+  }
+}

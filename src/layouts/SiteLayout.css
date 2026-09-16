@@ -1,0 +1,45 @@
+/* Page chrome shared by every route below /home.
+   The gradient matches `.home-page` so moving between them is seamless. */
+
+.site-layout {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(
+    circle farthest-corner at 50% 45%,
+    var(--navy-600) 0%,
+    var(--navy-700) 65.4%,
+    var(--navy-900) 130.8%
+  );
+  background-attachment: fixed;
+  animation: home-fade-in 480ms ease both;
+}
+
+.site-layout__shell {
+  width: 100%;
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: 0 var(--shell-gutter);
+}
+
+.site-layout__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: clamp(40px, 8vh, 72px);
+}
+
+/* Simulation pages run edge to edge under the header, with no page gutter
+   below them - the replica's own footer ends the page. The bleed element may be
+   a direct child, or nested inside a tab shell (the IPI victim/attacker views). */
+.site-layout__main .page-bleed {
+  flex: 1;
+}
+
+.site-layout__main:has(.page-bleed) {
+  padding-bottom: 0;
+}
+
+.site-layout__main > .ipi-shell {
+  flex: 1;
+}

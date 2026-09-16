@@ -1,0 +1,109 @@
+/* Figma frame "Home Page" (6:27), 800 x 600 */
+
+.home-page {
+  min-height: 100dvh;
+  /* Radial gradient: core #0b2f51, mid #09213c @ 35%, outer #061326 @ 70%
+     of a circle centred slightly above the frame's midpoint. */
+  background: radial-gradient(
+    circle farthest-corner at 50% 45%,
+    var(--navy-600) 0%,
+    var(--navy-700) 65.4%,
+    var(--navy-900) 130.8%
+  );
+  animation: home-fade-in 480ms ease both;
+}
+
+.home-page__shell {
+  max-width: var(--shell-max);
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: 0 var(--shell-gutter) clamp(40px, 8vh, 72px);
+  display: flex;
+  flex-direction: column;
+}
+
+.home-page__main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 400px) minmax(0, 440px);
+  justify-content: space-between;
+  align-items: center;
+  gap: clamp(24px, 4vw, 64px);
+  padding-block: clamp(32px, 7vh, 72px);
+}
+
+/* --- Page introduction (6:44) --- */
+
+.page-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.page-intro__eyebrow {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--cyan);
+}
+
+.page-intro__heading {
+  margin: 0;
+  font-size: clamp(26px, 4vw, 32px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text);
+}
+
+.page-intro__accent {
+  width: 96px;
+  height: 2px;
+  background: var(--cyan);
+}
+
+.page-intro__description {
+  margin: 0;
+  font-size: clamp(15px, 2vw, 16px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* --- Promo slideshow (replaces the single "Promo image" 9:4) --- */
+
+.home-page__promo {
+  width: 100%;
+  max-width: 440px;
+  justify-self: end;
+}
+
+@keyframes home-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 720px) {
+  .home-page__main {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    text-align: center;
+    gap: 40px;
+  }
+
+  .page-intro {
+    align-items: center;
+    max-width: 480px;
+  }
+
+  .home-page__promo {
+    justify-self: center;
+    max-width: 420px;
+  }
+}

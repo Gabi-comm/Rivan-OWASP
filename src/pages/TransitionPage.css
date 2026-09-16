@@ -1,0 +1,121 @@
+/* Figma frame "Transition Page" (2:2), 800 x 600 */
+
+.transition-page {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--shell-gutter);
+  cursor: pointer;
+  /* Radial gradient: core #0b2f51, mid #071e37 @ 29.6%, outer #040c1e @ 59.1%
+     of a circle whose radius is ~1.92x the frame's half-diagonal. */
+  background: radial-gradient(
+    circle farthest-corner at 50% 50%,
+    var(--navy-600) 0%,
+    var(--navy-800) 56.8%,
+    var(--navy-1000) 113.6%
+  );
+  opacity: 1;
+  transition: opacity 420ms ease;
+}
+
+.transition-page.is-leaving {
+  opacity: 0;
+}
+
+.transition-page__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  animation: transition-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.transition-page__logo {
+  width: 240px;
+  height: 180px;
+  max-width: 62vw;
+}
+
+.transition-page__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.transition-page__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.transition-page__heading {
+  margin: 0;
+  font-size: clamp(22px, 4.75vw, 38px);
+  font-weight: 700;
+  line-height: normal;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--text);
+  text-shadow: 0 0 24px var(--cyan-glow);
+}
+
+.transition-page__divider {
+  width: min(420px, 78vw);
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 200, 255, 0) 0%,
+    var(--cyan-bright) 50%,
+    rgba(0, 200, 255, 0) 100%
+  );
+}
+
+.transition-page__tagline {
+  margin: 0;
+  font-size: clamp(12px, 1.9vw, 15px);
+  font-weight: 400;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.85;
+}
+
+.transition-page__skip {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(20px, 5vh, 40px);
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.45;
+  animation: transition-pulse 2.4s ease-in-out 1.2s infinite;
+}
+
+@keyframes transition-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes transition-pulse {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
