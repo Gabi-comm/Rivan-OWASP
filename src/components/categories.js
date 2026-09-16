@@ -3,7 +3,7 @@
 export const CATEGORIES = [
   {
     id: "prompt-hacking",
-    label: "Prompt Hacking",
+    label: "LLM01: Prompt Injection",
     path: "/category/prompt-hacking",
     blurb: "Get a model to ignore the instructions it was given.",
     children: [

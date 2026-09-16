@@ -42,7 +42,7 @@ export default function App() {
               title="Direct Prompt Injection"
               blurb="Attacking the model straight through its own input box — jailbreaks, instruction overrides, and role-play framings typed by the user. The simulation for this track is not built yet."
               backTo={PROMPT_HACKING}
-              backLabel="Prompt Hacking"
+              backLabel="LLM01: Prompt Injection"
             />
           }
         />
@@ -53,7 +53,7 @@ export default function App() {
               title="Memory Poisoning"
               blurb="Planting something in an assistant's long-term memory now that it acts on in a later, otherwise clean session. The simulation for this track is not built yet."
               backTo={PROMPT_HACKING}
-              backLabel="Prompt Hacking"
+              backLabel="LLM01: Prompt Injection"
             />
           }
         />

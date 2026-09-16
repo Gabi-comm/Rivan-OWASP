@@ -22,7 +22,7 @@ export default function CategoryIndexPage({ categoryId }) {
     <div className="site-layout__shell category-index">
       <header className="category-index__intro">
         <p className="category-index__eyebrow">
-          {category ? "Prompt Hacking" : "Rivan Simulation"}
+          {category ? "LLM01: Prompt Injection" : "Rivan Simulation"}
         </p>
         <h1 className="category-index__heading">{heading}</h1>
         <div className="category-index__accent" />
