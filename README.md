@@ -1,15 +1,5 @@
 # Rivan Simulation
 
-React front-end for **RivanCyber Training Institute Inc.**, built from the Figma
-file [`Rivan Simulation`](https://www.figma.com/design/YPJDpQWgSMrkBnGtS1lH2g/Untitled?node-id=1-5).
-
-> **Local teaching prop.** The Indirect Prompt Injection lab reproduces a
-> fast-food brand (logos, photography under `src/assets/mcdo/`) to build a
-> convincing replica for a security class. Those assets are third-party
-> property, not covered by this repo's licence. Run it on `localhost` for
-> teaching — do not deploy the replica to a public domain, and swap the brand
-> assets for your own before distributing it. See `LICENSE`.
-
 ## Run it
 
 ```bash
@@ -18,31 +8,6 @@ npm run dev      # http://localhost:5173
 npm run build    # production bundle in dist/
 npm run preview  # serve the built bundle
 ```
-
-## Screens
-
-| Route | Notes |
-| ----- | ----- |
-| `/` | Splash (Figma `Transition Page` 2:2); holds 2.6s, then hands off to `/home`. Click or press any key to skip. |
-| `/home` | Figma `Home Page` 6:27 — hero intro and promo slideshow. Renders its own `SiteHeader`. |
-| `/about` | About the institute. |
-| `/category` | Lists the three tracks. |
-| `/category/prompt-hacking` | Lists the three attack types. |
-| `/category/prompt-hacking/indirect-prompt-injection` | Redirects to `/victim`. |
-| `.../indirect-prompt-injection/victim` | **The lab, customer's view.** See below. |
-| `.../indirect-prompt-injection/attacker` | Same site + a console for planting a review. |
-| `/category/prompt-hacking/direct-prompt-injection` | Stub. |
-| `/category/prompt-hacking/memory-poisoning` | Stub. |
-| `/category/guardrailing` | Stub. |
-| `/category/machine-learning` | Stub. |
-| `*` | 404, inside the site chrome. |
-
-Everything except `/` and `/home` renders inside `SiteLayout` (`src/layouts/`),
-which supplies the header and the page background. `/home` predates the layout
-and still renders its own header.
-
-The nav tree lives in `src/components/categories.js`. The header menu and the
-category pages both read from it, so adding a topic in one place updates both.
 
 ## Structure
 
@@ -71,58 +36,6 @@ src/
     leakDetector.js         spots secrets in a reply
   index.css          design tokens lifted from Figma
 ```
-
-Every element carries its Figma node id as a `data-node-id` attribute, so a
-component can be traced back to the exact layer it came from.
-
-## Design tokens
-
-Defined once in `src/index.css`:
-
-| Token             | Value     | Used for                          |
-| ----------------- | --------- | --------------------------------- |
-| `--navy-600`      | `#0b2f51` | Core of both radial backgrounds   |
-| `--navy-700/800`  | `#09213c` / `#071e37` | Mid gradient stops    |
-| `--navy-900/1000` | `#061326` / `#040c1e` | Outer gradient stops  |
-| `--panel`         | `#0d2744` | Category dropdown surface         |
-| `--panel-border`  | `#1b4667` | Dropdown border                   |
-| `--tab-idle`      | `#081a31` | Inactive nav tab                  |
-| `--tab-active`    | `#123858` | Active / hovered nav tab          |
-| `--cyan`          | `#39c7f2` | Eyebrow, accent line              |
-| `--cyan-bright`   | `#00c8ff` | Splash divider core               |
-| `--text-muted`    | `#7ec8e3` | Body copy, tagline                |
-
-Type is **Inter** (400/500/700), matching the Figma text styles.
-
-## Promo slideshow
-
-`PromoSlideshow.jsx` rotates four square promo cards:
-
-1. `rivan.jpg` — Start your I.T. career
-2. `image-1.jpg` — Enterprise-grade equipment
-3. `image-2.jpg` — Mentorship from professionals
-4. `image-3.jpg` — Trusted across the industry
-
-- Auto-advances every 5s (`INTERVAL_MS`), pausing on hover and on focus.
-- Prev/next arrows, clickable dots, and left/right arrow keys when focused.
-- Crossfades between slides; autoplay is disabled under
-  `prefers-reduced-motion: reduce`.
-- The frame is **1:1**, not the Figma's 280 x 320. All four cards are square
-  artwork whose headline and contact bands sat outside a portrait crop.
-- Card width went from 280px to 440px.
-
-To add or reorder cards, edit the `SLIDES` array — drop the file in
-`src/assets/`, import it, and add an entry with `alt` and `caption`.
-
-## Responsive behaviour
-
-The Figma frames are a fixed 800 x 600. The build keeps those exact colours,
-type sizes and spacing while reflowing:
-
-- **≥ 720px** — intro left, slideshow right, as designed.
-- **< 720px** — single centred column, slideshow below the copy.
-
-Both columns shrink proportionally below 940px, so nothing overflows.
 
 ## Indirect Prompt Injection lab
 
@@ -177,12 +90,6 @@ page context: with the payloads in place it leaks 5/5; with them stripped out it
 keeps the secret 3/3 while inventing plausible promos. That gap is the lesson —
 a leak alone proves nothing if the model was never keeping the secret.
 
-`gemma3:270m` was tried and removed. At 270M parameters the injection never
-landed (0/4 — it answers with a stray fragment instead of reading the page) and
-it gave the secret up with no attack at all, so it could demonstrate neither
-half. The model picker in the chat panel only renders when `MODELS` in
-`src/chat/ollama.js` has more than one entry.
-
 ### Anatomy
 
 - `goal-in-indirect-injection.md` — the three presets, each with the question it
@@ -205,8 +112,6 @@ half. The model picker in the chat panel only renders when `MODELS` in
 - `sims/mcdo/injectionPayload.js` — now only the fabricated secrets
   (`MCD-CREW-88-OVERRIDE`, PIN `4417`). Nothing real is involved.
 
-All three templates land 5/5 through the real chat UI; the clean Victim tab
-leaks 0/3.
 
 The **Reveal hidden payload** toggle (Lab controls, in the chat panel) shows
 planted text using CSS generated content, so turning it on never changes what
