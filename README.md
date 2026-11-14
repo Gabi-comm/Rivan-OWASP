@@ -15,6 +15,7 @@ npm run preview  # serve the built bundle
 src/
   assets/            logo-rivan.png, rivan.jpg, image-1..3.jpg
   assets/mcdo/       artwork for the simulated site (14 files)
+  assets/bir/        artwork for the simulated tax-agency site
   components/
     categories.js       the nav tree: tracks, topics, paths, blurbs
     SiteHeader.jsx      logo, wordmark, nav tabs, Category menu + submenu
@@ -24,11 +25,18 @@ src/
   pages/
     TransitionPage.jsx  HomePage.jsx  AboutPage.jsx
     CategoryIndexPage.jsx  ComingSoonPage.jsx
-    IndirectPromptInjectionPage.jsx   briefing, sim, debrief
+    ipi/               Indirect lab: role switcher, Victim and Attacker views
+    dpi/               Direct lab: DirectPromptInjectionPage.jsx
   sims/mcdo/         the simulated fast-food site
     McdoSite.jsx + McdoNav/Hero/Cards/Footer.jsx + mcdo.css
     injectionPayload.js  the planted attacker text and where it goes
     pageContext.js       the scraper the bot uses
+  sims/bir/          the simulated tax-agency site (Direct lab)
+    BirSite.jsx + BirHeader/Sections/Footer.jsx + bir.css
+    birContent.js        copy and artwork, apart from the markup
+    birSecrets.js        the fabricated values the bot protects
+    birSystemPrompt.js   the bot's system message
+    birPersona.js        what ChatWidget needs to become this site's bot
   chat/              the popup assistant
     ChatWidget.jsx + .css   UI, lab controls, leak banner
     ollama.js               local model client
@@ -116,3 +124,28 @@ a leak alone proves nothing if the model was never keeping the secret.
 The **Reveal hidden payload** toggle (Lab controls, in the chat panel) shows
 planted text using CSS generated content, so turning it on never changes what
 the scraper collects.
+
+## Direct Prompt Injection lab
+
+`/category/prompt-hacking/direct-prompt-injection` — one view over a replica
+tax-agency site with a support bot in the corner.
+
+Where the Indirect lab hides the attack in content the bot reads, this one has
+nothing to plant: the site is clean, the bot does not scrape it, and the only
+way in is the chat box. The system prompt holds two fabricated values
+(`BIR-EFPS-ADMIN-7731`, PIN `5082`) and a sentence forbidding the bot to share
+them. That sentence is the entire defence.
+
+The messages to type, with what each one teaches, are in
+[`goal-in-direct-injection.md`](./goal-in-direct-injection.md). Measured against
+`llama3.2` at `temperature: 0`, each as the first message of a fresh chat: the
+four control messages (including the classic "ignore all previous
+instructions") are refused, and the three documented attacks leak both values.
+
+`ChatWidget` is shared between the two labs. It takes a `persona` — copy,
+theme, system-prompt builder and the secrets that count as a leak — and
+defaults to the fast-food site's, so the Indirect lab passes nothing.
+
+**The replica is a training prop.** Not affiliated with, endorsed by, or
+connected to the Bureau of Internal Revenue or any government agency. Keep it
+local — do not deploy it to a public domain.

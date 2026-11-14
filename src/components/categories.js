@@ -20,6 +20,7 @@ export const CATEGORIES = [
         label: "Direct Prompt Injection",
         path: "/category/prompt-hacking/direct-prompt-injection",
         blurb: "Attacking the model straight through its own input box.",
+        ready: true,
       },
       {
         id: "memory-poisoning",

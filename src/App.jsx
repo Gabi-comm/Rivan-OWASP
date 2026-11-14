@@ -8,6 +8,7 @@ import ComingSoonPage from "./pages/ComingSoonPage.jsx";
 import IndirectPromptInjectionLayout from "./pages/ipi/IndirectPromptInjectionLayout.jsx";
 import VictimPage from "./pages/ipi/VictimPage.jsx";
 import AttackerPage from "./pages/ipi/AttackerPage.jsx";
+import DirectPromptInjectionPage from "./pages/dpi/DirectPromptInjectionPage.jsx";
 
 const PROMPT_HACKING = "/category/prompt-hacking";
 
@@ -37,14 +38,7 @@ export default function App() {
         </Route>
         <Route
           path={`${PROMPT_HACKING}/direct-prompt-injection`}
-          element={
-            <ComingSoonPage
-              title="Direct Prompt Injection"
-              blurb="Attacking the model straight through its own input box — jailbreaks, instruction overrides, and role-play framings typed by the user. The simulation for this track is not built yet."
-              backTo={PROMPT_HACKING}
-              backLabel="LLM01: Prompt Injection"
-            />
-          }
+          element={<DirectPromptInjectionPage />}
         />
         <Route
           path={`${PROMPT_HACKING}/memory-poisoning`}

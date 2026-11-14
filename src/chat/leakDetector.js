@@ -30,11 +30,12 @@ function containsToken(haystack, token) {
  * Returns the confidential values that appear in an assistant reply.
  *
  * Boundary-checked so the short PIN doesn't fire on an unrelated number that
- * happens to contain the same digits.
+ * happens to contain the same digits. `secrets` defaults to the fast-food
+ * sim's values; the Direct Prompt Injection lab passes its own.
  */
-export function detectLeak(text) {
+export function detectLeak(text, secrets = FAKE_SECRETS) {
   if (!text) return [];
-  return FAKE_SECRETS.filter((secret) => containsToken(text, secret.value));
+  return secrets.filter((secret) => containsToken(text, secret.value));
 }
 
 /**

@@ -5,21 +5,37 @@ import { detectLeak, detectPlantedEffects } from "./leakDetector.js";
 import { harvestPageContext } from "../sims/mcdo/pageContext.js";
 import "./ChatWidget.css";
 
+/**
+ * Everything that differs between the sims the widget sits on: copy, colours,
+ * the system prompt, and which secrets count as a leak. The default is the
+ * fast-food site from the Indirect Prompt Injection lab; other labs pass their
+ * own (see sims/bir/birPersona.js).
+ */
+const MCDO_PERSONA = {
+  theme: "",
+  name: "McDelivery Assistant",
+  subtitle: "Simulated support bot",
+  greeting:
+    "Hi! I'm the McDelivery PH assistant. Ask me about our promos, delivery, menu or careers.",
+  suggestions: [
+    "What promos do you have?",
+    "Tell me about the NXTGEN store",
+    "How do I apply for a job?",
+  ],
+  placeholder: "Ask about promos, delivery, careers…",
+  buildSystemPrompt,
+  secrets: undefined, // detectLeak's default
+  leakCause: "the hidden text on this page talked it into it.",
+};
+
 /** Canned opener. `local` keeps it out of what gets sent to the model — it is
     UI copy the model never produced, and small models answer it instead of the
     user's actual question. */
-const GREETING = {
+const greetingFor = (persona) => ({
   role: "assistant",
   local: true,
-  content:
-    "Hi! I'm the McDelivery PH assistant. Ask me about our promos, delivery, menu or careers.",
-};
-
-const SUGGESTIONS = [
-  "What promos do you have?",
-  "Tell me about the NXTGEN store",
-  "How do I apply for a job?",
-];
+  content: persona.greeting,
+});
 
 /**
  * The simulated site's support bot.
@@ -28,9 +44,14 @@ const SUGGESTIONS = [
  * prompt, which is exactly how a real page-aware assistant behaves — and
  * exactly how the planted instructions reach the model.
  */
-export default function ChatWidget({ scrapeRef, reveal, onToggleReveal }) {
+export default function ChatWidget({
+  scrapeRef,
+  reveal,
+  onToggleReveal,
+  persona = MCDO_PERSONA,
+}) {
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState([GREETING]);
+  const [messages, setMessages] = useState(() => [greetingFor(persona)]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
@@ -76,7 +97,7 @@ export default function ChatWidget({ scrapeRef, reveal, onToggleReveal }) {
     setBusy(true);
 
     const pageContext = harvestPageContext(scrapeRef?.current);
-    const systemPrompt = buildSystemPrompt(pageContext);
+    const systemPrompt = persona.buildSystemPrompt(pageContext);
     setLastPrompt(systemPrompt);
 
     const controller = new AbortController();
@@ -99,7 +120,7 @@ export default function ChatWidget({ scrapeRef, reveal, onToggleReveal }) {
         {
           role: "assistant",
           content: reply,
-          leaks: detectLeak(reply),
+          leaks: detectLeak(reply, persona.secrets),
           effects: detectPlantedEffects(reply),
         },
       ]);
@@ -119,10 +140,10 @@ export default function ChatWidget({ scrapeRef, reveal, onToggleReveal }) {
   if (!open) {
     return (
       <button
-        className="chat-launcher"
+        className={`chat-launcher ${persona.theme}`}
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Open the McDelivery assistant"
+        aria-label={`Open the ${persona.name}`}
       >
         <span aria-hidden="true">💬</span>
       </button>
@@ -130,11 +151,11 @@ export default function ChatWidget({ scrapeRef, reveal, onToggleReveal }) {
   }
 
   return (
-    <section className="chat-panel" aria-label="McDelivery assistant">
+    <section className={`chat-panel ${persona.theme}`} aria-label={persona.name}>
       <header className="chat-panel__header">
         <div>
-          <p className="chat-panel__title">McDelivery Assistant</p>
-          <p className="chat-panel__subtitle">Simulated support bot</p>
+          <p className="chat-panel__title">{persona.name}</p>
+          <p className="chat-panel__subtitle">{persona.subtitle}</p>
         </div>
         <button
           className="chat-panel__close"
@@ -160,8 +181,8 @@ export default function ChatWidget({ scrapeRef, reveal, onToggleReveal }) {
               <p className="chat-leak" role="status">
                 <strong>⚠ Injection successful</strong> — this reply leaked the{" "}
                 {message.leaks.map((leak) => leak.label).join(" and the ")}. The
-                model was told never to share {message.leaks.length > 1 ? "them" : "it"};
-                the hidden text on this page talked it into it.
+                model was told never to share {message.leaks.length > 1 ? "them" : "it"};{" "}
+                {persona.leakCause}
               </p>
             )}
             <div className="chat-msg__bubble">{message.content}</div>
@@ -188,7 +209,7 @@ export default function ChatWidget({ scrapeRef, reveal, onToggleReveal }) {
 
       {messages.length === 1 && !busy && (
         <div className="chat-panel__suggestions">
-          {SUGGESTIONS.map((suggestion) => (
+          {persona.suggestions.map((suggestion) => (
             <button
               key={suggestion}
               className="chat-chip"
@@ -213,7 +234,7 @@ export default function ChatWidget({ scrapeRef, reveal, onToggleReveal }) {
           ref={inputRef}
           value={input}
           onChange={(event) => setInput(event.target.value)}
-          placeholder="Ask about promos, delivery, careers…"
+          placeholder={persona.placeholder}
           disabled={busy}
         />
         <button className="chat-panel__send" type="submit" disabled={busy || !input.trim()}>
@@ -258,14 +279,31 @@ export default function ChatWidget({ scrapeRef, reveal, onToggleReveal }) {
               </p>
             )}
 
-            <label className="chat-lab__row chat-lab__row--check">
-              <input
-                type="checkbox"
-                checked={reveal}
-                onChange={(event) => onToggleReveal(event.target.checked)}
-              />
-              <span>Reveal hidden payload on the page</span>
-            </label>
+            {/* Only labs with something concealed on the page offer this. */}
+            {onToggleReveal && (
+              <label className="chat-lab__row chat-lab__row--check">
+                <input
+                  type="checkbox"
+                  checked={reveal}
+                  onChange={(event) => onToggleReveal(event.target.checked)}
+                />
+                <span>Reveal hidden payload on the page</span>
+              </label>
+            )}
+
+            <button
+              className="chat-lab__toggle"
+              type="button"
+              onClick={() => {
+                abortRef.current?.abort();
+                setBusy(false);
+                setError(null);
+                setMessages([greetingFor(persona)]);
+              }}
+              disabled={messages.length === 1}
+            >
+              Start a new conversation
+            </button>
 
             <button
               className="chat-lab__toggle"

@@ -1,0 +1,731 @@
+/* Simulated tax-agency site (Direct Prompt Injection lab).
+
+   Everything is scoped under .bir-sim. The surrounding app is a dark navy
+   theme with `color-scheme: dark` on :root, so this subtree re-declares its
+   own light context rather than inheriting. */
+
+.bir-sim {
+  --bir-blue: #0b5ed7;
+  --bir-blue-dark: #0a4fb5;
+  --bir-red: #dc143c;
+  --bir-ink: #2b3445;
+  --bir-text: #333a47;
+  --bir-link: #0000ee;
+  --bir-pale: #f1f4f9;
+  --bir-max: 1340px;
+
+  color-scheme: light;
+  background: #ffffff;
+  color: var(--bir-text);
+  font-family: "Outfit", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.45;
+  overflow: hidden;
+  /* Column flex so the footer, not a white gap, absorbs any spare height. */
+  display: flex;
+  flex-direction: column;
+}
+
+.bir-sim button {
+  font-family: inherit;
+}
+
+.bir-sim p {
+  margin: 0;
+}
+
+.bir-shell {
+  width: 100%;
+  max-width: calc(var(--bir-max) + 2 * var(--shell-gutter));
+  margin: 0 auto;
+  padding: 0 var(--shell-gutter);
+}
+
+/* --- Shared pieces --- */
+
+.bir-h2 {
+  margin: 0;
+  font-size: clamp(22px, 2.1vw, 28px);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--bir-ink);
+}
+
+.bir-h2--center {
+  text-align: center;
+}
+
+.bir-h2--lg {
+  font-size: clamp(24px, 2.3vw, 31px);
+  font-weight: 700;
+}
+
+.bir-rule {
+  width: 48px;
+  height: 4px;
+  margin: 18px 0 22px;
+  background: var(--bir-red);
+}
+
+.bir-rule--center {
+  width: 80px;
+  margin: 12px auto 0;
+}
+
+.bir-btn {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 10px 17px;
+  border-radius: 3px;
+  background: var(--bir-blue);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background 150ms ease;
+}
+
+.bir-btn:hover {
+  background: var(--bir-blue-dark);
+}
+
+.bir-link {
+  padding: 0;
+  color: var(--bir-link);
+  font-size: inherit;
+  font-weight: 500;
+}
+
+.bir-link:hover {
+  text-decoration: underline;
+}
+
+.bir-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 0;
+  color: var(--bir-blue);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.bir-more:hover {
+  color: var(--bir-blue-dark);
+}
+
+.bir-section {
+  padding-top: 56px;
+  padding-bottom: 40px;
+}
+
+.bir-section--tight {
+  padding-top: 28px;
+  padding-bottom: 22px;
+}
+
+.bir-lede {
+  max-width: 700px;
+  margin: 22px auto 0 !important;
+  text-align: center;
+  font-size: 17px;
+}
+
+/* --- Header --- */
+
+.bir-header__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 8px;
+  padding-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.bir-header__logo {
+  width: clamp(220px, 23vw, 300px);
+}
+
+.bir-header__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.bir-header__contact {
+  display: flex;
+  gap: 22px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1c2434;
+}
+
+.bir-header__contact span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.bir-header__contact svg {
+  color: var(--bir-blue);
+}
+
+.bir-header__tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bir-search {
+  display: flex;
+  align-items: center;
+  width: clamp(170px, 19vw, 264px);
+  padding: 0 12px 0 16px;
+  border: 1px solid #d5d9e0;
+  border-radius: 5px;
+  color: #8a909c;
+}
+
+.bir-search input {
+  flex: 1;
+  min-width: 0;
+  padding: 9px 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  color: var(--bir-ink);
+}
+
+.bir-header__seal {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.bir-nav {
+  background: #f4f6fa;
+  border-top: 1px solid #e6e9ef;
+  border-bottom: 1px solid #e6e9ef;
+}
+
+.bir-nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px clamp(14px, 1.9vw, 30px);
+  margin: 0 auto;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  list-style: none;
+}
+
+.bir-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #1f2a44;
+  white-space: nowrap;
+}
+
+.bir-nav__link:hover {
+  color: var(--bir-blue);
+}
+
+.bir-nav__lower {
+  text-transform: none;
+}
+
+/* --- Banners (hero and the two slide strips) --- */
+
+.bir-banner {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  background: #dfe2e6;
+}
+
+.bir-banner::before {
+  content: "";
+  position: absolute;
+  inset: -30px;
+  background: var(--bir-banner-image) center / cover;
+  filter: blur(26px) saturate(0.7);
+  opacity: 0.75;
+}
+
+.bir-banner__image {
+  position: relative;
+  width: 100%;
+  max-width: 1394px;
+}
+
+.bir-banner__pause {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  width: 38px;
+  height: 38px;
+  border: 3px solid rgba(120, 124, 132, 0.75);
+  border-radius: 50%;
+  background:
+    linear-gradient(rgba(120, 124, 132, 0.85) 0 0) 13px 50% / 3px 12px no-repeat,
+    linear-gradient(rgba(120, 124, 132, 0.85) 0 0) 20px 50% / 3px 12px no-repeat;
+}
+
+.bir-banner__pager {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  padding: 8px 9px;
+  border-radius: 999px;
+  background: #1f2a44;
+}
+
+.bir-banner__pager span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #7f8797;
+}
+
+.bir-banner__pager span.is-active {
+  background: #ffffff;
+}
+
+.bir-banner__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 26px 12px 9px;
+  background: linear-gradient(transparent, rgba(31, 42, 68, 0.85));
+  color: #ffffff;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-align: left;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+/* --- Tax reminder --- */
+
+.bir-reminder {
+  background: var(--bir-pale);
+  padding: 32px 0 26px;
+}
+
+.bir-reminder__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.bir-reminder__image {
+  width: min(384px, 100%);
+  border: 1px solid #d9dde4;
+  border-radius: 8px;
+}
+
+.bir-reminder__copy {
+  max-width: 410px;
+}
+
+.bir-reminder__copy .bir-h2 {
+  margin-bottom: 12px;
+}
+
+.bir-reminder__copy .bir-rule {
+  margin: 16px 0 14px;
+}
+
+.bir-reminder__today {
+  margin-bottom: 14px !important;
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--bir-ink);
+}
+
+.bir-reminder__item {
+  font-size: 17px;
+}
+
+/* --- Quick links --- */
+
+.bir-quick {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 40px;
+  margin-top: 22px;
+  padding: 0 18px;
+}
+
+.bir-quick ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bir-quick button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 0;
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--bir-ink);
+  text-align: left;
+}
+
+.bir-quick button:hover {
+  color: var(--bir-blue);
+}
+
+.bir-quick__icon {
+  flex: none;
+  width: 44px;
+  height: 44px;
+}
+
+/* --- Cards (laws and eServices) --- */
+
+.bir-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 26px;
+}
+
+.bir-card {
+  border: 1px solid #dcdfe5;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.bir-card__image {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.bir-card__body {
+  padding: 16px 16px 20px;
+}
+
+.bir-card h3 {
+  margin: 0 0 8px;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: #1c2f5c;
+}
+
+.bir-card--service .bir-card__body {
+  min-height: 250px;
+}
+
+/* --- What's New --- */
+
+.bir-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 38px 0 44px;
+}
+
+.bir-tabs__tab {
+  padding: 11px 12px;
+  border-bottom: 2px solid transparent;
+  border-radius: 6px 6px 0 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--bir-ink);
+}
+
+.bir-tabs__tab.is-active {
+  background: #edf1f7;
+  border-bottom-color: var(--bir-blue);
+}
+
+.bir-news {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: justify;
+}
+
+.bir-news li {
+  margin-bottom: 6px;
+  color: #555b66;
+}
+
+.bir-news strong {
+  color: #16191f;
+  font-weight: 600;
+}
+
+.bir-news__sep {
+  color: var(--bir-link);
+}
+
+/* --- Appointment --- */
+
+.bir-appointment {
+  margin-top: 20px;
+  background:
+    repeating-radial-gradient(
+      ellipse 130% 90% at 30% 120%,
+      transparent 0 9px,
+      rgba(150, 160, 180, 0.13) 9px 10px
+    ),
+    #f7f8fb;
+}
+
+.bir-appointment__inner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.bir-appointment__inner > div {
+  align-self: center;
+  padding: 40px 0;
+}
+
+.bir-appointment__inner img {
+  width: clamp(200px, 28vw, 400px);
+  margin-top: 26px;
+  /* The portrait fades out at the hip in the source artwork. */
+  mask-image: linear-gradient(#000 82%, transparent);
+}
+
+/* --- Calculator --- */
+
+.bir-calculator {
+  background: linear-gradient(135deg, #ffffff, #eef0f4 45%, #ffffff 70%, #e9ecf1);
+  padding: 34px 0 44px;
+}
+
+.bir-calculator__inner {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.bir-calculator__inner img {
+  width: clamp(200px, 25vw, 330px);
+  flex: none;
+}
+
+/* --- NPC seal --- */
+
+.bir-npc {
+  background: var(--bir-pale);
+  padding: 34px 0;
+}
+
+.bir-npc__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.bir-npc__inner > div {
+  max-width: 910px;
+}
+
+.bir-npc__inner img {
+  width: clamp(120px, 15vw, 205px);
+  flex: none;
+  margin-right: 5%;
+}
+
+/* --- Visitors --- */
+
+.bir-visitors {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  padding-top: 60px;
+  padding-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.bir-visitors img {
+  width: min(400px, 80%);
+}
+
+.bir-visitors .bir-rule {
+  margin: 20px 0 22px;
+}
+
+.bir-visitors__count {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--bir-ink);
+}
+
+/* --- Footer --- */
+
+.bir-footer {
+  background: #0f172a;
+  color: #cbd2de;
+  padding: 40px 0 150px;
+  flex: 1;
+}
+
+.bir-footer__inner {
+  display: grid;
+  grid-template-columns: 150px minmax(200px, 1fr) auto auto auto;
+  gap: 30px clamp(28px, 5vw, 80px);
+  align-items: start;
+}
+
+.bir-footer__arms {
+  width: 140px;
+  filter: grayscale(1) contrast(0.75);
+  opacity: 0.38;
+}
+
+.bir-footer__logos {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bir-footer__logos img {
+  height: 58px;
+  width: auto;
+}
+
+.bir-footer__logos .bir-footer__dict {
+  height: 52px;
+}
+
+.bir-footer__brand p {
+  margin-top: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #ffffff;
+}
+
+.bir-footer__links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bir-footer__links li {
+  margin-bottom: 15px;
+}
+
+.bir-footer__links button {
+  padding: 0;
+  font-size: 15px;
+  color: #cbd2de;
+  text-align: left;
+}
+
+.bir-footer__links button:hover {
+  color: #ffffff;
+}
+
+.bir-footer__heading {
+  margin-bottom: 12px !important;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.bir-footer__socials {
+  display: flex;
+  gap: 14px;
+}
+
+.bir-footer__socials button {
+  padding: 0;
+  color: #ffffff;
+}
+
+/* --- Small screens --- */
+
+@media (max-width: 900px) {
+  .bir-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .bir-card--service .bir-card__body {
+    min-height: 0;
+  }
+
+  .bir-quick {
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
+
+  .bir-quick button {
+    font-size: 17px;
+  }
+
+  .bir-header__right {
+    align-items: flex-start;
+  }
+
+  .bir-header__contact {
+    flex-wrap: wrap;
+    gap: 6px 18px;
+  }
+
+  .bir-calculator__inner,
+  .bir-npc__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bir-npc__inner img {
+    align-self: center;
+    margin-right: 0;
+  }
+
+  .bir-appointment__inner img {
+    display: none;
+  }
+
+  .bir-banner__pager {
+    max-width: 80%;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 12px;
+  }
+
+  .bir-banner__pager span {
+    width: 8px;
+    height: 8px;
+  }
+
+  .bir-footer__inner {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bir-news {
+    text-align: left;
+  }
+}

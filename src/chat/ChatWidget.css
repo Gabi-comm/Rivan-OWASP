@@ -375,3 +375,34 @@
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+
+/* --- Theme: the tax-agency sim (Direct Prompt Injection lab) ---
+   Same widget, re-skinned in that site's blue so it reads as part of it. */
+
+.chat-launcher.chat--bir,
+.chat--bir .chat-panel__header,
+.chat--bir .chat-panel__send {
+  background: #0b5ed7;
+}
+
+.chat-launcher.chat--bir:hover {
+  background: #0a4fb5;
+}
+
+.chat--bir .chat-msg--user .chat-msg__bubble {
+  background: #0b5ed7;
+  color: #ffffff;
+}
+
+.chat--bir .chat-chip:hover {
+  border-color: #0b5ed7;
+  color: #0b5ed7;
+}
+
+.chat--bir .chat-panel__input:focus-visible {
+  outline-color: #0b5ed7;
+}
+
+.chat--bir .chat-panel__send:disabled {
+  background: #a9c4ec;
+}

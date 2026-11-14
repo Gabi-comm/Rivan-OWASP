@@ -1,0 +1,12 @@
+/* The simulation runs edge to edge directly under the site header, the same
+   way the Indirect Prompt Injection views do. */
+
+.dpi-page {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.dpi-page .bir-sim {
+  flex: 1;
+}
